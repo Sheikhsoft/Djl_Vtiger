@@ -1,7 +1,9 @@
-package vtiger.djl.william.djl_vtiger;
+package vtiger.djl.william.djl_vtiger.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import vtiger.djl.william.djl_vtiger.R;
 
 public class MainActivity extends AppCompatActivity {
 
