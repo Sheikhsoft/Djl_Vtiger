@@ -1,11 +1,14 @@
 package vtiger.djl.william.djl_vtiger.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +36,7 @@ import vtiger.djl.william.djl_vtiger.R;
 import vtiger.djl.william.djl_vtiger.Utils.Util;
 
 public class LoginActivity extends AppCompatActivity {
+    private SharedPreferences prefs;
     private Button mbtnLogin;
     private EditText metUsuario;
     private EditText metPassword;
@@ -44,12 +48,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         bindUI();
+        prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+
         mbtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
         });
+    }
+
+    private void saveOnPreferences() {
+        if (TextUtils.isEmpty(Util.getSesionPrefs(prefs))) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("sesion", "1");
+            editor.apply();
+        }
     }
 
     private void login(){
@@ -62,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         if (is_authenticated()){
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            //saveOnPreferences();
             startActivity(intent);
         }else{
             Toast.makeText(getApplicationContext(),"Usuario y/o password incorrectos",Toast.LENGTH_LONG).show();
