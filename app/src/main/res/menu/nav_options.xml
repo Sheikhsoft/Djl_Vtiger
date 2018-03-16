@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
         android:id="@+id/firstGroup"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_mail"
+            android:id="@+id/menu_dashboard"
+            android:icon="@android:drawable/ic_lock_lock"
+            android:title="Dashboard"/>
+        <item
+            android:id="@+id/menu_proyecto"
             android:icon="@android:drawable/ic_dialog_email"
-            android:title="Email" />
+            android:title="Proyectos" />
         <item
-            android:id="@+id/menu_alert"
+            android:id="@+id/menu_hitos"
             android:icon="@android:drawable/ic_dialog_alert"
-            android:title="Alerts" />
+            android:title="Hitos" />
         <item
-            android:id="@+id/menu_info"
+            android:id="@+id/menu_actividades"
             android:icon="@android:drawable/ic_dialog_info"
-            android:title="Information" />
+            android:title="Actividades" />
     </group>
 </menu>

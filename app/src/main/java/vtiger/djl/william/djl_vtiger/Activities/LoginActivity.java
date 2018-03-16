@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button mbtnLogin;
     private EditText metUsuario;
     private EditText metPassword;
+    private Bundle datos;
 
     private static final String TAG = "LoginActivity";
 
@@ -77,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             //saveOnPreferences();
+            intent.putExtras(datos);
             startActivity(intent);
         }else{
             Toast.makeText(getApplicationContext(),"Usuario y/o password incorrectos",Toast.LENGTH_LONG).show();
@@ -109,11 +111,10 @@ public class LoginActivity extends AppCompatActivity {
             final ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
             if (jsonArray!= null){
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
-                HashMap<String, String> map = new HashMap<>();
-                map.put("id",jsonObject.getString("id"));
-                map.put("nom",jsonObject.getString("first_name"));
-                map.put("ape",jsonObject.getString("last_name"));
-                map.put("pre",jsonObject.getString("user_name"));
+                datos = new Bundle();
+                datos.putString("id",jsonObject.getString("id"));
+                datos.putString("nom",jsonObject.getString("first_name"));
+                datos.putString("ape", jsonObject.getString("last_name"));
                 return true;
             }else{
                 return false;

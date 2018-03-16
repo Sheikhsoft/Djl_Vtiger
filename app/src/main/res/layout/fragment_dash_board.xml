@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="vtiger.djl.william.djl_vtiger.Fragments.ProyectoFragment">
+    tools:context="vtiger.djl.william.djl_vtiger.Fragments.DashBoardFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvProjects"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>
