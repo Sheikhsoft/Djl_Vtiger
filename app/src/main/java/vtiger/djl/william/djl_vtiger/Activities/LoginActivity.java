@@ -41,9 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText metUsuario;
     private EditText metPassword;
     private Bundle datos;
-    //Progress bar animacion
-    private ProgressBar miprogress;
-    private ObjectAnimator anim;
 
     private static final String TAG = "LoginActivity";
 
@@ -70,20 +67,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarProgress(){
+    /*private void mostrarProgress(){
         //agregamos el tiempo de la animacion a mostrar
         miprogress.setVisibility(View.VISIBLE);
         anim.setDuration(15000);
         anim.setInterpolator(new DecelerateInterpolator());
         //iniciamos el progressbar
         anim.start();
-    }
+    }*/
 
     private void login(){
         Log.d(TAG, "Login");
-        mostrarProgress();
+        //mostrarProgress();
         if (!validate()){
-            anim.cancel();
+            //anim.cancel();
             return;
         }
 
@@ -93,12 +90,12 @@ public class LoginActivity extends AppCompatActivity {
             //saveOnPreferences();
             intent.putExtras(datos);
             startActivity(intent);
-            anim.cancel();
-            miprogress.setVisibility(View.INVISIBLE);
+            //anim.cancel();
+            //miprogress.setVisibility(View.INVISIBLE);
         }else{
-            anim.cancel();
+            //anim.cancel();
             Toast.makeText(getApplicationContext(),"Usuario y/o password incorrectos",Toast.LENGTH_LONG).show();
-            miprogress.setVisibility(View.INVISIBLE);
+            //miprogress.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -153,8 +150,8 @@ public class LoginActivity extends AppCompatActivity {
         mbtnLogin = findViewById(R.id.btnLogin);
         metPassword = findViewById(R.id.etPassword);
         metUsuario = findViewById(R.id.etUsuario);
-        miprogress = findViewById(R.id.circularProgress);
-        anim = ObjectAnimator.ofInt(miprogress, "progress", 0, 100);
+        //miprogress = findViewById(R.id.circularProgress);
+        //anim = ObjectAnimator.ofInt(miprogress, "progress", 0, 100);
     }
 
     //Valido las credenciales del usuario
