@@ -1,18 +1,20 @@
 package vtiger.djl.william.djl_vtiger.Activities;
 
-import android.app.ProgressDialog;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -21,11 +23,9 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText metUsuario;
     private EditText metPassword;
     private Bundle datos;
+    //Progress bar animacion
+    private ProgressBar miprogress;
+    private ObjectAnimator anim;
 
     private static final String TAG = "LoginActivity";
 
@@ -67,10 +70,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void mostrarProgress(){
+        //agregamos el tiempo de la animacion a mostrar
+        miprogress.setVisibility(View.VISIBLE);
+        anim.setDuration(15000);
+        anim.setInterpolator(new DecelerateInterpolator());
+        //iniciamos el progressbar
+        anim.start();
+    }
+
     private void login(){
         Log.d(TAG, "Login");
-
+        mostrarProgress();
         if (!validate()){
+            anim.cancel();
             return;
         }
 
@@ -80,8 +93,12 @@ public class LoginActivity extends AppCompatActivity {
             //saveOnPreferences();
             intent.putExtras(datos);
             startActivity(intent);
+            anim.cancel();
+            miprogress.setVisibility(View.INVISIBLE);
         }else{
+            anim.cancel();
             Toast.makeText(getApplicationContext(),"Usuario y/o password incorrectos",Toast.LENGTH_LONG).show();
+            miprogress.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -136,6 +153,8 @@ public class LoginActivity extends AppCompatActivity {
         mbtnLogin = findViewById(R.id.btnLogin);
         metPassword = findViewById(R.id.etPassword);
         metUsuario = findViewById(R.id.etUsuario);
+        miprogress = findViewById(R.id.circularProgress);
+        anim = ObjectAnimator.ofInt(miprogress, "progress", 0, 100);
     }
 
     //Valido las credenciales del usuario
