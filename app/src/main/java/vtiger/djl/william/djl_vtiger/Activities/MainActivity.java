@@ -18,6 +18,7 @@ import vtiger.djl.william.djl_vtiger.Fragments.ActividadesFragment;
 import vtiger.djl.william.djl_vtiger.Fragments.DashBoardFragment;
 import vtiger.djl.william.djl_vtiger.Fragments.HitosFragment;
 import vtiger.djl.william.djl_vtiger.Fragments.ProyectoFragment;
+import vtiger.djl.william.djl_vtiger.Models.Users;
 import vtiger.djl.william.djl_vtiger.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View navHeader;
     private TextView mtvNombreUser;
     private Bundle datosRecibidos;
+    private Users user = new Users();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +42,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loginExito(){
         datosRecibidos = getIntent().getExtras();
-        String nombre = datosRecibidos.getString("nom");
-        String apellido = datosRecibidos.getString("ape");
-        if (datosRecibidos!=null){
+        user.setFirst_name(datosRecibidos.getString("nom"));
+        user.setLast_name(datosRecibidos.getString("ape"));
+
+        if (user!=null){
             navHeader = navigationView.getHeaderView(0);
             mtvNombreUser = navHeader.findViewById(R.id.tvUserName);
-            mtvNombreUser.setText(nombre+" "+apellido);
+            mtvNombreUser.setText(user.getFirst_name()+" "+user.getLast_name());
             //Intent intentLogin = new Intent(this, )
         }else{
             Toast.makeText(this,"Error al recibir los datos",Toast.LENGTH_SHORT).show();

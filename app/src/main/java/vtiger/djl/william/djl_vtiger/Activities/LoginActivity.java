@@ -32,6 +32,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vtiger.djl.william.djl_vtiger.API.API;
+import vtiger.djl.william.djl_vtiger.API.APIServices.LoginService;
+import vtiger.djl.william.djl_vtiger.Models.Users;
 import vtiger.djl.william.djl_vtiger.R;
 import vtiger.djl.william.djl_vtiger.Utils.Util;
 
@@ -42,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText metPassword;
     private Bundle datos;
 
+    private LoginService loginService;
+    private Call<Users> usersCall;
+
     private static final String TAG = "LoginActivity";
 
     @Override
@@ -51,12 +60,51 @@ public class LoginActivity extends AppCompatActivity {
         bindUI();
         prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
 
+        loginService = API.getApi().create(LoginService.class);
         mbtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
+                //login();
+                loginRetrofit();
             }
         });
+    }
+
+    private void loginRetrofit(){
+        if (!validate()){
+            return;
+        }
+        String user = metUsuario.getText().toString();
+        String pass = metPassword.getText().toString();
+
+        if (user != null && pass!=null){
+            usersCall = loginService.getLogin(user,pass);
+            usersCall.enqueue(new Callback<Users>() {
+                @Override
+                public void onResponse(Call<Users> call, Response<Users> response) {
+                    Users users = response.body();
+                    if (!TextUtils.isEmpty(users.getUser_name())){
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        //saveOnPreferences();
+                        datos = new Bundle();
+                        datos.putInt("id",users.getId());
+                        datos.putString("nom",users.getFirst_name());
+                        datos.putString("ape", users.getLast_name());
+                        intent.putExtras(datos);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Usuario y/o password incorrectos",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Users> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(),"Error al conectar",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     private void saveOnPreferences() {
@@ -76,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         anim.start();
     }*/
 
-    private void login(){
+    /*private void login(){
         Log.d(TAG, "Login");
         //mostrarProgress();
         if (!validate()){
@@ -98,9 +146,9 @@ public class LoginActivity extends AppCompatActivity {
             //miprogress.setVisibility(View.INVISIBLE);
         }
 
-    }
+    }*/
 
-    private boolean is_authenticated(){
+    /*private boolean is_authenticated(){
         StrictMode.ThreadPolicy policy =
                 new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -144,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
-    }
+    }*/
 
     private void bindUI(){
         mbtnLogin = findViewById(R.id.btnLogin);
