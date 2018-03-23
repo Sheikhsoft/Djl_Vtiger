@@ -1,7 +1,5 @@
 package vtiger.djl.william.djl_vtiger.Models;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by William on 20/03/2018.
  */

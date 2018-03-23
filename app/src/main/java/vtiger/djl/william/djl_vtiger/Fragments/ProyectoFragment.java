@@ -5,30 +5,29 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.w3c.dom.ls.LSInput;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 
-import vtiger.djl.william.djl_vtiger.Adapters.ProjectList_Adapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vtiger.djl.william.djl_vtiger.API.API;
+import vtiger.djl.william.djl_vtiger.API.APIServices.Services;
+import vtiger.djl.william.djl_vtiger.Adapters.ProjectListAdapter;
+import vtiger.djl.william.djl_vtiger.Models.Projects;
+import vtiger.djl.william.djl_vtiger.Models.ProjectsList;
 import vtiger.djl.william.djl_vtiger.R;
-import vtiger.djl.william.djl_vtiger.Utils.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +35,10 @@ import vtiger.djl.william.djl_vtiger.Utils.Util;
 public class ProyectoFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ProjectListAdapter projectListAdapter;
+
+    private Services service;
+    private Call<ProjectsList> projectsCall;
 
     public ProyectoFragment() {
         // Required empty public constructor
@@ -46,15 +49,32 @@ public class ProyectoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_proyecto, container, false);
-        mRecyclerView = view.findViewById(R.id.rvProjects);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        listProjects();
+        //ADAPTADOR ESTA COMENTADO HASTA QUE EL DEBUG DEVUELVA EL RESPONSE CORRECTO
+        /*mRecyclerView = view.findViewById(R.id.rvProjects);
+        mLayoutManager = new LinearLayoutManager(getContext());*/
+        service = API.getProjectsApi().create(Services.class);
+        projectsCall = service.listProjects();
+        projectsCall.enqueue(new Callback<ProjectsList>() {
+            @Override
+            public void onResponse(Call<ProjectsList> call, Response<ProjectsList> response) {
+                List<Projects> list = response.body().getProjectsArrayList();
+                Toast.makeText(getActivity().getApplicationContext(),list.get(0).getProjectname(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ProjectsList> call, Throwable t) {
+                Toast.makeText(getContext().getApplicationContext(),"Error: " + t.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void listProjects(){
-        String ruta = Util.rutaWS_projectList;
+
+    //METODO COMENTADO CONEXION FUNCIONA PERO SE DESEA USAR RETROFIT EN EL PROYECTO
+     /*private void listProjects(){
+
+       String ruta = Util.rutaWS_projectList;
         URL url;
 
         try {
@@ -79,7 +99,7 @@ public class ProyectoFragment extends Fragment {
                 arrayList.add(map);
             }
 
-            ProjectList_Adapter projectListAdapter = new ProjectList_Adapter(arrayList,R.layout.recycler_view_projects);
+            ProjectListAdapter projectListAdapter = new ProjectListAdapter(arrayList,R.layout.recycler_view_projects);
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setAdapter(projectListAdapter);
@@ -92,6 +112,6 @@ public class ProyectoFragment extends Fragment {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
 }

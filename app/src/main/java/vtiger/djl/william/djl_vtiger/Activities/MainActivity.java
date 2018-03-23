@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_dashboard:
                 fragment = new DashBoardFragment();
-                fragmentTransaction=true;
+                fragmentTransaction = true;
                 break;
         }
 

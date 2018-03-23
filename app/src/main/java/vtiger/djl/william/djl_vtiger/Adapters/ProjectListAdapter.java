@@ -6,23 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import vtiger.djl.william.djl_vtiger.Models.Projects;
 import vtiger.djl.william.djl_vtiger.R;
 
 /**
  * Created by William on 15/03/2018.
  */
 
-public class ProjectList_Adapter extends RecyclerView.Adapter<ProjectList_Adapter.ViewHolder>{
-    private ArrayList projects;
+public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.ViewHolder>{
+    private List<Projects> projects;
     private int layout;
 
-    public ProjectList_Adapter(ArrayList projects, int layout) {
+    public ProjectListAdapter(List<Projects> projects, int layout) {
         this.projects = projects;
         this.layout = layout;
     }
@@ -36,8 +34,7 @@ public class ProjectList_Adapter extends RecyclerView.Adapter<ProjectList_Adapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        HashMap<String,String> map = (HashMap<String, String>) projects.get(position);
-        holder.bind(map.get("pjName").toString(), map.get("pjContact").toString(), map.get("pjStatus").toString());
+        holder.bind(projects.get(position));
     }
 
     @Override
@@ -59,10 +56,10 @@ public class ProjectList_Adapter extends RecyclerView.Adapter<ProjectList_Adapte
             this.mtvProjectStatus = itemView.findViewById(R.id.tvProjectStatus);
         }
 
-        public void bind(final String projectName, final String projectAccount, final String projectStatus){
-            this.mtvProjectName.setText(projectName);
-            this.mtvProjectAccount.setText(projectAccount);
-            this.mtvProjectStatus.setText(projectStatus);
+        public void bind(Projects project){
+            this.mtvProjectName.setText(project.getProjectname());
+            this.mtvProjectAccount.setText(project.getAccountname());
+            this.mtvProjectStatus.setText(project.getProjectstatus());
         }
     }
 }
