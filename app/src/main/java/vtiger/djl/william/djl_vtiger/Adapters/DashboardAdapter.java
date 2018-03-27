@@ -29,7 +29,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_dashboard, parent, false);
         //context = parent.getContext();
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -59,8 +59,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
         }
 
         public void bind(final Dashboard dashboard){
-            this.mtvNumberItem.setText(dashboard.getNumber());
-            this.mtvItemDashboard.setText(dashboard.getItem());
+            this.mtvNumberItem.setText(String.valueOf(dashboard.getNumber()));
+            //this.mtvItemDashboard.setText(dashboard.getItem());
             //Falta el icono
         }
     }

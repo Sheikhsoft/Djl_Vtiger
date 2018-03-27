@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvProjectsList"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@android:color/holo_red_light"
-    android:paddingTop="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:orientation="vertical">
+    android:clickable="true"
+    android:layout_margin="3dp"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="#E2E2E2"
+    card_view:cardCornerRadius="4dp">
 
-    <TextView
-        android:id="@+id/tvProjectName"
-        android:textSize="24sp"
-        android:textStyle="bold"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Proyecto"/>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tvProjectAccount"
-            android:textSize="18sp"
-            android:textColor="@color/djlLetrasAzul"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Project account"/>
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvProjectStatus"
-            android:text="Status"
+            android:id="@+id/tvProjectName"
             android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:paddingRight="5dp"
-            android:gravity="right"
+            android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Proyecto"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvProjectAccount"
+                android:textSize="14sp"
+                android:textColor="@color/djlLetrasAzul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Project account"/>
+
+            <TextView
+                android:id="@+id/tvProjectStatus"
+                android:text="Status"
+                android:textSize="12sp"
+                android:textStyle="italic|bold"
+                android:paddingRight="5dp"
+                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
-
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

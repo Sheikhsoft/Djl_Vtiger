@@ -20,5 +20,5 @@ public interface Services {
     Call<Users> getLogin(@Query("user") String user, @Query("pass") String pass);
 
     @GET("vtiger_projectList.php")
-    Call<ProjectsList> listProjects();
+    Call<List<Projects>> listProjects();
 }

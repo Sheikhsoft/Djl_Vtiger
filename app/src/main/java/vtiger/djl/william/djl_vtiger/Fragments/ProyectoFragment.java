@@ -28,6 +28,9 @@ import vtiger.djl.william.djl_vtiger.Adapters.ProjectListAdapter;
 import vtiger.djl.william.djl_vtiger.Models.Projects;
 import vtiger.djl.william.djl_vtiger.Models.ProjectsList;
 import vtiger.djl.william.djl_vtiger.R;
+import vtiger.djl.william.djl_vtiger.network.EasyHomeAPI;
+import vtiger.djl.william.djl_vtiger.network.response.getProjectsResponse;
+import vtiger.djl.william.djl_vtiger.network.ws.ApiUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,9 +39,11 @@ public class ProyectoFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private ProjectListAdapter projectListAdapter;
+    //EasyHomeAPI goEasyHomeAPI;
 
     private Services service;
-    private Call<ProjectsList> projectsCall;
+    private Call<List<Projects>> projectsCall;
+    private List<Projects> projectList;
 
     public ProyectoFragment() {
         // Required empty public constructor
@@ -50,25 +55,56 @@ public class ProyectoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_proyecto, container, false);
         //ADAPTADOR ESTA COMENTADO HASTA QUE EL DEBUG DEVUELVA EL RESPONSE CORRECTO
-        /*mRecyclerView = view.findViewById(R.id.rvProjects);
-        mLayoutManager = new LinearLayoutManager(getContext());*/
+        mRecyclerView = view.findViewById(R.id.rvProjects);
+        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        //service = API.getProjectsApi().create(Services.class);
+        /* METODO CLASICO UDEMY */
         service = API.getProjectsApi().create(Services.class);
         projectsCall = service.listProjects();
-        projectsCall.enqueue(new Callback<ProjectsList>() {
+        listarAntiguo();
+        //projectsCall.enqueue();
+        // Inflate the layout for this fragment
+        /* METODO DE HERNAN */
+        //goEasyHomeAPI = ApiUtils.getAPIService();
+        //listarProjects();
+        return view;
+    }
+
+    private void listarAntiguo(){
+        projectsCall.enqueue(new Callback<List<Projects>>() {
             @Override
-            public void onResponse(Call<ProjectsList> call, Response<ProjectsList> response) {
-                List<Projects> list = response.body().getProjectsArrayList();
-                Toast.makeText(getActivity().getApplicationContext(),list.get(0).getProjectname(), Toast.LENGTH_LONG).show();
+            public void onResponse(Call<List<Projects>> call, Response<List<Projects>> response) {
+                projectList = new ArrayList<>();
+                projectList.clear();
+                projectList.addAll(response.body());
+                projectListAdapter = new ProjectListAdapter(getActivity().getApplicationContext(),response.body());
+                mRecyclerView.setHasFixedSize(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setAdapter(projectListAdapter);
+                //Toast.makeText(getActivity().getApplicationContext(), "List<getProjectsResponse>: " + response.body().size(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(Call<ProjectsList> call, Throwable t) {
-                Toast.makeText(getContext().getApplicationContext(),"Error: " + t.toString(), Toast.LENGTH_LONG).show();
+            public void onFailure(Call<List<Projects>> call, Throwable t) {
+                Toast.makeText(getActivity().getApplicationContext(), "Error: "+t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-        // Inflate the layout for this fragment
-        return view;
     }
+
+    /*
+    private void listarProjects(){
+        goEasyHomeAPI.listProjects().enqueue(new Callback<List<getProjectsResponse>>() {
+            @Override
+            public void onResponse(Call<List<getProjectsResponse>> call, Response<List<getProjectsResponse>> response) {
+                Toast.makeText(getActivity().getApplicationContext(), "List<getProjectsResponse>: " + response.body().size(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<getProjectsResponse>> call, Throwable t) {
+                Toast.makeText(getActivity().getApplicationContext(), "Error: "+t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
 
 
     //METODO COMENTADO CONEXION FUNCIONA PERO SE DESEA USAR RETROFIT EN EL PROYECTO

@@ -18,12 +18,25 @@ import vtiger.djl.william.djl_vtiger.Models.ProjectsList;
  * Created by William on 21/03/2018.
  */
 
-public class ProjectDeserializer implements JsonDeserializer<ProjectsList> {
+public class ProjectDeserializer implements JsonDeserializer<List<Projects>> {
+
+    private List<Projects> arrayList = new ArrayList<>();
+
     @Override
-    public ProjectsList deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonArray projectsList =  json.getAsJsonArray();
-        return null;
+    public List<Projects> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        for (int i = 0 ; i <= json.getAsJsonArray().size()-1; i++){
+            String id = json.getAsJsonArray().get(i).getAsJsonObject().get("projectid").getAsString();
+            String name = json.getAsJsonArray().get(i).getAsJsonObject().get("projectname").getAsString();
+            String status = json.getAsJsonArray().get(i).getAsJsonObject().get("projectstatus").getAsString();
+            String accountid = json.getAsJsonArray().get(i).getAsJsonObject().get("accountid").getAsString();
+            String account = json.getAsJsonArray().get(i).getAsJsonObject().get("accountname").getAsString();
+            Projects projects = new Projects(id,name,status,accountid,account);
+            arrayList.add(projects);
+        }
+        return arrayList;
     }
+
+
 
 
 

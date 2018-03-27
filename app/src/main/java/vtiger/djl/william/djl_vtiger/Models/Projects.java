@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Projects {
     @SerializedName("projectid")
-    private int projectid;
+    private String projectid;
     @SerializedName("projectname")
     private String projectname;
     private String project_no;
@@ -26,14 +26,14 @@ public class Projects {
 
     //FK account
     @SerializedName("accountid")
-    private int accountid;
+    private String accountid;
     @SerializedName("accountname")
     private String accountname;
 
     public Projects() {
     }
 
-    public Projects(int projectid, String project_name, String projectstatus, int accountid, String accountname) {
+    public Projects(String projectid, String project_name, String projectstatus, String accountid, String accountname) {
         this.projectid = projectid;
         this.projectname = project_name;
         this.projectstatus = projectstatus;
@@ -41,11 +41,11 @@ public class Projects {
         this.accountname = accountname;
     }
 
-    public int getProjectid() {
+    public String getProjectid() {
         return projectid;
     }
 
-    public void setProjectid(int projectid) {
+    public void setProjectid(String projectid) {
         this.projectid = projectid;
     }
 
@@ -65,11 +65,11 @@ public class Projects {
         this.projectstatus = projectstatus;
     }
 
-    public int getAccountid() {
+    public String getAccountid() {
         return accountid;
     }
 
-    public void setAccountid(int accountid) {
+    public void setAccountid(String accountid) {
         this.accountid = accountid;
     }
 

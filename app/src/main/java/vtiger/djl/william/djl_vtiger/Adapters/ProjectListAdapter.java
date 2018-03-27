@@ -1,5 +1,6 @@
 package vtiger.djl.william.djl_vtiger.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +18,19 @@ import vtiger.djl.william.djl_vtiger.R;
  */
 
 public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.ViewHolder>{
+    private Context mContext;
     private List<Projects> projects;
-    private int layout;
+    //private int layout;
 
-    public ProjectListAdapter(List<Projects> projects, int layout) {
+    public ProjectListAdapter(Context context,List<Projects> projects) {
         this.projects = projects;
-        this.layout = layout;
+        this.mContext = context;
+        //this.layout = layout;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_projects, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }

@@ -38,12 +38,11 @@ public class API {
 
     public static Retrofit getProjectsApi(){
         if (retrofitProject == null){
-            /*GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(ProjectsList.class, new ProjectDeserializer());*/
-            //SE QUITO LA DESEREALIZACION
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(List.class, new ProjectDeserializer());
             retrofitProject = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(builder.create()))
                     .build();
         }
         return retrofitProject;
