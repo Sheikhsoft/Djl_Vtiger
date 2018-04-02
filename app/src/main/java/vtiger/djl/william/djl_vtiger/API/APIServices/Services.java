@@ -7,7 +7,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import vtiger.djl.william.djl_vtiger.Models.Projects;
-import vtiger.djl.william.djl_vtiger.Models.ProjectsList;
 import vtiger.djl.william.djl_vtiger.Models.Users;
 
 /**

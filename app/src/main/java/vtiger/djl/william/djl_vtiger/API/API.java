@@ -2,15 +2,12 @@ package vtiger.djl.william.djl_vtiger.API;
 
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import vtiger.djl.william.djl_vtiger.API.Deserializers.LoginDeserializer;
 import vtiger.djl.william.djl_vtiger.API.Deserializers.ProjectDeserializer;
-import vtiger.djl.william.djl_vtiger.Models.Projects;
-import vtiger.djl.william.djl_vtiger.Models.ProjectsList;
 import vtiger.djl.william.djl_vtiger.Models.Users;
 
 /**

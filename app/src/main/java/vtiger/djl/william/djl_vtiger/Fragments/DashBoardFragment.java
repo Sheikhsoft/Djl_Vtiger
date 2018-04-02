@@ -39,7 +39,7 @@ public class DashBoardFragment extends Fragment {
         dashboard = this.getDashboard();
         mrvDashboard = v.findViewById(R.id.rvDashboard);
         mLayoutManager = new GridLayoutManager(this.getActivity(),2);
-        mAdapter = new DashboardAdapter(dashboard,R.layout.recycler_view_item_dashboard);
+        mAdapter = new DashboardAdapter(dashboard);
         mrvDashboard.setLayoutManager(mLayoutManager);
         mrvDashboard.setAdapter(mAdapter);
         // Inflate the layout for this fragment

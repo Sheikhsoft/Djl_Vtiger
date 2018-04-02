@@ -5,15 +5,15 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import vtiger.djl.william.djl_vtiger.Activities.Base.BaseActivity;
 import vtiger.djl.william.djl_vtiger.Fragments.ActividadesFragment;
 import vtiger.djl.william.djl_vtiger.Fragments.DashBoardFragment;
 import vtiger.djl.william.djl_vtiger.Fragments.HitosFragment;
@@ -21,12 +21,12 @@ import vtiger.djl.william.djl_vtiger.Fragments.ProyectoFragment;
 import vtiger.djl.william.djl_vtiger.Models.Users;
 import vtiger.djl.william.djl_vtiger.R;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private View navHeader;
     private TextView mtvNombreUser;
     private Bundle datosRecibidos;
+    private View navHeader;
     private Users user = new Users();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +35,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setToolbar();
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navview);
+        navHeader = navigationView.getHeaderView(0);
         setFragmentByDefault();
         navigationView.setNavigationItemSelectedListener(this);
-        loginExito();
+        successLogin();
+        /*
+        if (Util.getSessionPrefs(prefs)=="1"){
+            mtvNombreUser.setText(Util.getNamePrefs(prefs)+" "+Util.getSurnamePrefs(prefs));
+        }else {
+            successLogin();
+        }*/
     }
 
-    private void loginExito(){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_action, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    private void successLogin(){
         datosRecibidos = getIntent().getExtras();
         user.setFirst_name(datosRecibidos.getString("nom"));
         user.setLast_name(datosRecibidos.getString("ape"));
@@ -49,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navHeader = navigationView.getHeaderView(0);
             mtvNombreUser = navHeader.findViewById(R.id.tvUserName);
             mtvNombreUser.setText(user.getFirst_name()+" "+user.getLast_name());
-            //Intent intentLogin = new Intent(this, )
         }else{
             Toast.makeText(this,"Error al recibir los datos",Toast.LENGTH_SHORT).show();
         }
@@ -81,9 +95,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-        }
+            case R.id.menu_logout:
+                Toast.makeText(getApplicationContext(), "Este es el Log Out", Toast.LENGTH_LONG).show();
+                return true;
 
-        return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

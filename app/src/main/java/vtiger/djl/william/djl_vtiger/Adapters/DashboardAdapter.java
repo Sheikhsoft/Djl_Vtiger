@@ -20,11 +20,11 @@ import vtiger.djl.william.djl_vtiger.R;
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder>{
 
     private List<Dashboard> list;
-    private int layout;
+    //private int layout;
 
-    public DashboardAdapter(List<Dashboard> list, int layout) {
+    public DashboardAdapter(List<Dashboard> list) {
         this.list = list;
-        this.layout = layout;
+        //this.layout = layout;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
 
         public void bind(final Dashboard dashboard){
             this.mtvNumberItem.setText(String.valueOf(dashboard.getNumber()));
-            //this.mtvItemDashboard.setText(dashboard.getItem());
+            this.mtvItemDashboard.setText(dashboard.getItem());
             //Falta el icono
         }
     }

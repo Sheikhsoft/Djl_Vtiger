@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import vtiger.djl.william.djl_vtiger.Interfaces.ProjectItemClickListener;
 import vtiger.djl.william.djl_vtiger.Models.Projects;
 import vtiger.djl.william.djl_vtiger.R;
 
@@ -20,12 +21,12 @@ import vtiger.djl.william.djl_vtiger.R;
 public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.ViewHolder>{
     private Context mContext;
     private List<Projects> projects;
-    //private int layout;
+    private ProjectItemClickListener projectListener;
 
-    public ProjectListAdapter(Context context,List<Projects> projects) {
+    public ProjectListAdapter(Context context,List<Projects> projects, ProjectItemClickListener listener) {
         this.projects = projects;
         this.mContext = context;
-        //this.layout = layout;
+        this.projectListener = listener;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(projects.get(position));
+        holder.bind(projects.get(position), projectListener);
     }
 
     @Override
@@ -59,10 +60,17 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             this.mtvProjectStatus = itemView.findViewById(R.id.tvProjectStatus);
         }
 
-        public void bind(Projects project){
+        public void bind(final Projects project, final ProjectItemClickListener listener){
             this.mtvProjectName.setText(project.getProjectname());
             this.mtvProjectAccount.setText(project.getAccountname());
             this.mtvProjectStatus.setText(project.getProjectstatus());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(project,getAdapterPosition());
+                }
+            });
         }
     }
 }

@@ -1,22 +1,17 @@
 package vtiger.djl.william.djl_vtiger.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.w3c.dom.ls.LSInput;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -24,13 +19,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vtiger.djl.william.djl_vtiger.API.API;
 import vtiger.djl.william.djl_vtiger.API.APIServices.Services;
+import vtiger.djl.william.djl_vtiger.Activities.MainActivity;
+import vtiger.djl.william.djl_vtiger.Activities.ProjectActivity;
 import vtiger.djl.william.djl_vtiger.Adapters.ProjectListAdapter;
+import vtiger.djl.william.djl_vtiger.Interfaces.ProjectItemClickListener;
 import vtiger.djl.william.djl_vtiger.Models.Projects;
-import vtiger.djl.william.djl_vtiger.Models.ProjectsList;
 import vtiger.djl.william.djl_vtiger.R;
-import vtiger.djl.william.djl_vtiger.network.EasyHomeAPI;
-import vtiger.djl.william.djl_vtiger.network.response.getProjectsResponse;
-import vtiger.djl.william.djl_vtiger.network.ws.ApiUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +71,13 @@ public class ProyectoFragment extends Fragment {
                 projectList = new ArrayList<>();
                 projectList.clear();
                 projectList.addAll(response.body());
-                projectListAdapter = new ProjectListAdapter(getActivity().getApplicationContext(),response.body());
+                projectListAdapter = new ProjectListAdapter(getActivity().getApplicationContext(), response.body(), new ProjectItemClickListener() {
+                    @Override
+                    public void onItemClick(Projects project, int position) {
+                        Intent intent = new Intent(getActivity(), ProjectActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(projectListAdapter);

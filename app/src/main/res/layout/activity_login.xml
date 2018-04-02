@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="vtiger.djl.william.djl_vtiger.Activities.LoginActivity">
-
+    <ProgressBar
+        android:id="@+id/pbLogin"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminate="false" />
     <LinearLayout
         android:orientation="vertical"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="56dp"
@@ -48,6 +54,12 @@
             android:inputType="textPassword"
             android:hint="password"/>
 
+        <CheckBox
+            android:id="@+id/cbRecordar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recordar" />
+
         <Button
             android:id="@+id/btnLogin"
             android:text="Ingresar"
@@ -58,4 +70,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>
